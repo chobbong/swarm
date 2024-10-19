@@ -1,3 +1,25 @@
+[tool.poetry]
+name = "swarm"
+version = "0.1.0"
+description = ""
+authors = ["teddy <teddylee777@gmail.com>"]
+license = "MIT License"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11.x"
+openai = "^1.52.0"
+pytest = "^8.3.3"
+requests = "^2.32.3"
+tqdm = "^4.66.5"
+pre-commit = "^4.0.1"
+instructor = "^1.6.2"
+jupyter = "^1.1.1"
+notebook = "^7.2.2"
+streamlit = "^1.39.0"
+python-dotenv = "^1.0.1"
+
+
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
