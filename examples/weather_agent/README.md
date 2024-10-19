@@ -1,27 +1,25 @@
-# Weather agent
+# 날씨 에이전트
 
-This example is a weather agent demonstrating function calling with a single agent. The agent has tools to get the weather of a particular city, and send an email.
+이 예제는 단일 에이전트에서 함수 호출을 시연하는 날씨 에이전트입니다. 이 에이전트는 특정 도시의 날씨를 조회하고 이메일을 보내는 도구를 가지고 있습니다.
 
-## Setup
+## 설정
 
-To run the weather agent Swarm:
+날씨 에이전트 Swarm을 실행하려면:
 
-1. Run
+1. 아래 명령어를 실행하세요.
 
 ```shell
 python3 run.py
 ```
 
-## Evals
+## 평가
 
-> [!NOTE]
-> These evals are intended to be examples to demonstrate functionality, but will have to be updated and catered to your particular use case.
+> [!참고]
+> 이 평가들은 기능을 시연하기 위한 예제일 뿐이며, 특정 사용 사례에 맞춰 업데이트되어야 합니다.
 
-This example uses `Pytest` to run eval unit tests. We have two tests in the `evals.py` file, one which
-tests if we call the `get_weather` function when expected, and one which assesses if we properly do NOT call the
-`get_weather` function when we shouldn't have a tool call.
+이 예제는 `Pytest`를 사용하여 평가 유닛 테스트를 실행합니다. `evals.py` 파일에는 두 가지 테스트가 있으며, 하나는 예상대로 `get_weather` 함수를 호출하는지 테스트하고, 다른 하나는 도구 호출이 필요하지 않은 경우 `get_weather` 함수를 호출하지 않는지 평가합니다.
 
-To run the evals, run
+평가를 실행하려면, 아래 명령어를 실행하세요.
 
 ```shell
 pytest evals.py

@@ -1,28 +1,25 @@
-# Triage agent
+# Triage 에이전트
 
-This example is a Swarm containing a triage agent, which takes in user inputs and chooses whether to respond directly, or triage the request
-to a sales or refunds agent.
+이 예제는 사용자의 입력을 받아 직접 응답할지, 혹은 판매 또는 환불 에이전트로 요청을 넘길지 결정하는 triage 에이전트를 포함하는 Swarm입니다.
 
-## Setup
+## 설정
 
-To run the triage agent Swarm:
+Triage 에이전트 Swarm을 실행하려면:
 
-1. Run
+1. 아래 명령어를 실행하세요.
 
 ```shell
 python3 run.py
 ```
 
-## Evals
+## 평가
 
-> [!NOTE]
-> These evals are intended to be examples to demonstrate functionality, but will have to be updated and catered to your particular use case.
+> [!참고]
+> 이 평가들은 기능을 시연하기 위한 예제일 뿐이며, 특정 사용 사례에 맞춰 업데이트되어야 합니다.
 
-This example uses `Pytest` to run eval unit tests. We have two tests in the `evals.py` file, one which
-tests if we call the correct triage function when expected, and one which assesses if a conversation
-is 'successful', as defined in our prompt in `evals.py`.
+이 예제는 `Pytest`를 사용하여 평가 유닛 테스트를 실행합니다. `evals.py` 파일에는 두 가지 테스트가 있으며, 하나는 예상대로 올바른 triage 함수를 호출하는지 테스트하고, 다른 하나는 `evals.py`에 정의된 프롬프트에 따라 대화가 '성공적인지' 평가합니다.
 
-To run the evals, run
+평가를 실행하려면, 아래 명령어를 실행하세요.
 
 ```shell
 pytest evals.py

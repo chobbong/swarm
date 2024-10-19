@@ -1,36 +1,36 @@
-# Swarm basic
+# Swarm 기본
 
-This folder contains basic examples demonstrating core Swarm capabilities. These examples show the simplest implementations of Swarm, with one input message, and a corresponding output. The `simple_loop_no_helpers` has a while loop to demonstrate how to create an interactive Swarm session.
+이 폴더에는 Swarm의 핵심 기능을 보여주는 기본 예제가 포함되어 있습니다. 이 예제들은 하나의 입력 메시지와 그에 따른 출력으로 Swarm의 가장 단순한 구현을 보여줍니다. `simple_loop_no_helpers`는 상호작용하는 Swarm 세션을 만드는 방법을 보여주기 위해 while 루프를 사용합니다.
 
-### Examples
+### 예제
 
 1. **agent_handoff.py**
 
-   - Demonstrates how to transfer a conversation from one agent to another.
-   - **Usage**: Transfers Spanish-speaking users from an English agent to a Spanish agent.
+   - 한 에이전트에서 다른 에이전트로 대화를 넘기는 방법을 보여줍니다.
+   - **사용법**: 스페인어 사용자들을 영어 에이전트에서 스페인어 에이전트로 전환합니다.
 
 2. **bare_minimum.py**
 
-   - A bare minimum example showing the basic setup of an agent.
-   - **Usage**: Sets up an agent that responds to a simple user message.
+   - 에이전트의 기본 설정을 보여주는 최소 예제입니다.
+   - **사용법**: 간단한 사용자 메시지에 응답하는 에이전트를 설정합니다.
 
 3. **context_variables.py**
 
-   - Shows how to use context variables within an agent.
-   - **Usage**: Uses context variables to greet a user by name and print account details.
+   - 에이전트 내에서 컨텍스트 변수를 사용하는 방법을 보여줍니다.
+   - **사용법**: 컨텍스트 변수를 사용하여 사용자 이름으로 인사하고 계정 세부 정보를 출력합니다.
 
 4. **function_calling.py**
 
-   - Demonstrates how to define and call functions from an agent.
-   - **Usage**: Sets up an agent that can respond with weather information for a given location.
+   - 에이전트에서 함수를 정의하고 호출하는 방법을 보여줍니다.
+   - **사용법**: 주어진 위치에 대한 날씨 정보를 응답하는 에이전트를 설정합니다.
 
 5. **simple_loop_no_helpers.py**
-   - An example of a simple interaction loop without using helper functions.
-   - **Usage**: Sets up a loop where the user can continuously interact with the agent, printing the conversation.
+   - 도우미 함수 없이 간단한 상호작용 루프의 예입니다.
+   - **사용법**: 사용자가 에이전트와 계속 상호작용할 수 있는 루프를 설정하고 대화를 출력합니다.
 
-## Running the Examples
+## 예제 실행 방법
 
-To run any of the examples, use the following command:
+아래 명령어를 사용하여 예제를 실행할 수 있습니다:
 
 ```shell
 python3 <example_name>.py

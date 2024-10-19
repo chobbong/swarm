@@ -1,39 +1,38 @@
-# Support bot
+# 지원 봇
 
-This example is a customer service bot which includes a user interface agent and a help center agent with several tools.
-This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
+이 예제는 사용자 인터페이스 에이전트와 여러 도구가 있는 도움말 센터 에이전트를 포함하는 고객 서비스 봇입니다. 이 예제에서는 상호작용하는 Swarm 세션을 만들 수 있는 도우미 함수인 `run_demo_loop`를 사용합니다.
 
-## Overview
+## 개요
 
-The support bot consists of two main agents:
+지원 봇은 두 가지 주요 에이전트로 구성됩니다:
 
-1. **User Interface Agent**: Handles initial user interactions and directs them to the help center agent based on their needs.
-2. **Help Center Agent**: Provides detailed help and support using various tools and integrated with a Qdrant VectorDB for documentation retrieval.
+1. **사용자 인터페이스 에이전트**: 초기 사용자 상호작용을 처리하고 사용자의 필요에 따라 도움말 센터 에이전트로 안내합니다.
+2. **도움말 센터 에이전트**: 다양한 도구를 사용하여 상세한 도움과 지원을 제공하며, 문서 검색을 위해 Qdrant VectorDB와 통합되어 있습니다.
 
-## Setup
+## 설정
 
-To start the support bot:
+지원 봇을 시작하려면:
 
-1. Ensure Docker is installed and running on your system.
-2. Install the necessary additional libraries:
+1. Docker가 시스템에 설치되어 실행 중인지 확인합니다.
+2. 필요한 추가 라이브러리를 설치합니다:
 
 ```shell
 make install
 ```
 
-3. Initialize docker
+3. Docker를 초기화합니다:
 
 ```shell
 docker-compose up -d
 ```
 
-4. Prepare the vector DB:
+4. 벡터 DB를 준비합니다:
 
 ```shell
 make prep
 ```
 
-5. Run the main scripy:
+5. 메인 스크립트를 실행합니다:
 
 ```shell
 make run
