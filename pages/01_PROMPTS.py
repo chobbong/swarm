@@ -6,6 +6,9 @@ st.title("Agent 별 프롬프트 테스트")
 
 st.markdown("아래의 프롬프트 적용 후 `main` 에서 바로 테스트 해볼 수 있습니다.")
 
+with st.expander("멀티 에이전트 설계도"):
+    st.image("assets/multi-agent.png")
+
 if "agents" not in st.session_state:
     st.session_state["agents"] = create_agents()
 
