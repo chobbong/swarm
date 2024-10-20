@@ -1,6 +1,32 @@
-from langchain_community.tools.tavily_search import TavilySearchResults
 from swarm import Agent
+from tavily import TavilyClient
 import streamlit as st
+
+
+class TavilySearch:
+    def __init__(self, api_key, domains=["google.com", "naver.com"], k=6):
+        self.client = TavilyClient(api_key=api_key)
+        self.domains = domains
+        self.k = k
+
+    def search(self, query: str):
+        response = self.client.search(
+            query,
+            search_depth="advanced",
+            max_results=self.k,
+            include_domains=self.domains,
+            include_raw_content=True,
+        )
+
+        search_results = [
+            {
+                "url": r["url"],
+                "content": f'<title>{r["title"]}</title><content>{r["content"]}</content><raw>{r["content"]}</raw>',
+            }
+            for r in response["results"]
+        ]
+
+        return search_results
 
 
 def read_instruction(file_path: str) -> str:
@@ -32,15 +58,12 @@ def search_on_web(query: str):
     """Search `query` on the web(google, naver) and return the results"""
     # 도구 생성
     if "TAVILY_API_KEY" in st.session_state:
-        search_tool = TavilySearchResults(
-            tavily_api_key=st.session_state["TAVILY_API_KEY"],
-            max_results=6,
-            include_answer=True,
-            include_raw_content=True,
-            search_depth="advanced",  # or "basic"
-            include_domains=["google.com", "naver.com"],
+        tavily_tool = TavilySearch(
+            api_key=st.session_state["TAVILY_API_KEY"],
+            domains=["google.com", "naver.com"],
+            k=6,
         )
-        return search_tool.invoke({"query": query})
+        return tavily_tool.search(query)
     else:
         return None
 

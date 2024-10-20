@@ -82,6 +82,7 @@ def process_and_print_streaming_response(response):
     with st.chat_message("assistant"):
         tool_container = st.empty()
         chat_container = st.empty()
+        content = ""
         tool_call_str = ""
         for chunk in response:
             # 발신자 정보 처리
@@ -111,8 +112,8 @@ def process_and_print_streaming_response(response):
                     tool_container.markdown(tool_call_str)
 
             # 컨텐츠 구분자 처리
-            if "delim" in chunk and chunk["delim"] == "end" and content:
-                content = ""
+            # if "delim" in chunk and chunk["delim"] == "end" and content:
+            #     content = ""
 
             # 최종 응답 반환
             if "response" in chunk:
