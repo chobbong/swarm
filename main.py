@@ -20,12 +20,15 @@ def check_api_key(key_name: str) -> bool:
 
 
 with st.sidebar:
-    st.markdown("API Key 설정")
-    st.markdown("[OpenAI API 키 발급방법](https://wikidocs.net/233342)")
-    openai_api_key = st.text_input("OPENAI API 키(GPT)", type="password")
-    st.markdown("[TAVILY API 키 발급방법](https://app.tavily.com/)")
-    tavily_api_key = st.text_input("TAVILY API 키(인터넷 검색)", type="password")
-    apply_btn = st.button("적용", type="primary")
+    st.markdown("🎥 [SWARM YouTube 영상](https://www.youtube.com/watch?v=iqXn6Oiis4Q)")
+    st.markdown("💻 [소스코드](https://github.com/teddylee777/swarm)")
+    st.markdown("---")
+    st.markdown("🔑 API Key 설정")
+    st.markdown("🔐 [OpenAI API 키 발급방법](https://wikidocs.net/233342)")
+    openai_api_key = st.text_input("🤖 OPENAI API 키(GPT)", type="password")
+    st.markdown("🔎 [TAVILY API 키 발급방법](https://app.tavily.com/)")
+    tavily_api_key = st.text_input("🌐 TAVILY API 키(인터넷 검색)", type="password")
+    apply_btn = st.button("✅ 적용", type="primary")
 
     if apply_btn:
         if openai_api_key:
@@ -36,9 +39,9 @@ with st.sidebar:
     key1 = deidentified_api_key("OPENAI_API_KEY")
     key2 = deidentified_api_key("TAVILY_API_KEY")
     if key1:
-        st.markdown(f"**OPENAI API 키**\n\n`{key1}`")
+        st.markdown(f"🔑 **OPENAI API 키**\n\n`{key1}`")
     if key2:
-        st.markdown(f"**TAVILY API 키**\n\n`{key2}`")
+        st.markdown(f"🔑 **TAVILY API 키**\n\n`{key2}`")
 
 
 if not check_api_key("OPENAI_API_KEY"):
