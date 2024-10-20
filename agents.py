@@ -1,5 +1,6 @@
 from langchain_community.tools.tavily_search import TavilySearchResults
 from swarm import Agent
+import streamlit as st
 
 
 def read_instruction(file_path: str) -> str:
@@ -30,14 +31,18 @@ def read_instruction(file_path: str) -> str:
 def search_on_web(query: str):
     """Search `query` on the web(google, naver) and return the results"""
     # 도구 생성
-    search_tool = TavilySearchResults(
-        max_results=6,
-        include_answer=True,
-        include_raw_content=True,
-        search_depth="advanced",  # or "basic"
-        include_domains=["google.com", "naver.com"],
-    )
-    return search_tool.invoke({"query": query})
+    if "TAVILY_API_KEY" in st.session_state:
+        search_tool = TavilySearchResults(
+            tavily_api_key=st.session_state["TAVILY_API_KEY"],
+            max_results=6,
+            include_answer=True,
+            include_raw_content=True,
+            search_depth="advanced",  # or "basic"
+            include_domains=["google.com", "naver.com"],
+        )
+        return search_tool.invoke({"query": query})
+    else:
+        return None
 
 
 def transfer_to_researcher():

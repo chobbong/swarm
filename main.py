@@ -9,14 +9,18 @@ st.title("[SWARM] Multi-Agent Orchestration")
 
 
 def deidentified_api_key(key_name: str) -> str:
-    api_key = os.environ.get(key_name)
-    if api_key:
+    if key_name in st.session_state:
+        api_key = st.session_state[key_name]
         return f"{api_key[:6]}...{api_key[-6:]}"
-    return None
+    else:
+        return None
 
 
 def check_api_key(key_name: str) -> bool:
-    return os.environ.get(key_name) is not None
+    if key_name in st.session_state:
+        return st.session_state[key_name] is not None
+    else:
+        return False
 
 
 with st.sidebar:
@@ -32,9 +36,9 @@ with st.sidebar:
 
     if apply_btn:
         if openai_api_key:
-            os.environ["OPENAI_API_KEY"] = openai_api_key
+            st.session_state["OPENAI_API_KEY"] = openai_api_key
         if tavily_api_key:
-            os.environ["TAVILY_API_KEY"] = tavily_api_key
+            st.session_state["TAVILY_API_KEY"] = tavily_api_key
 
     key1 = deidentified_api_key("OPENAI_API_KEY")
     key2 = deidentified_api_key("TAVILY_API_KEY")
@@ -58,8 +62,8 @@ if "agents" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
-if "swarm" not in st.session_state:
-    client = OpenAI()
+if "swarm" not in st.session_state and check_api_key("OPENAI_API_KEY"):
+    client = OpenAI(api_key=st.session_state["OPENAI_API_KEY"])
     st.session_state["swarm"] = Swarm(client=client)
 
 
@@ -122,11 +126,11 @@ print_messages()
 user_input = st.chat_input("Enter your message")
 
 if user_input:
-    # 사용자 메시지 표시
-    st.chat_message("user").markdown(user_input)
-    st.session_state["messages"].append({"role": "user", "content": user_input})
-
     if "swarm" in st.session_state:
+        # 사용자 메시지 표시
+        st.chat_message("user").markdown(user_input)
+        st.session_state["messages"].append({"role": "user", "content": user_input})
+
         swarm = st.session_state["swarm"]
         # Swarm을 사용하여 응답 생성
         response = swarm.run(
