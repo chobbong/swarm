@@ -1,6 +1,39 @@
 ![Swarm 로고](assets/logo.png)
 
-# Swarm (실험적/교육용)
+## YouTube 설명 영상
+
+[![데모 영상](https://img.youtube.com/vi/iqXn6Oiis4Q/0.jpg)](https://youtu.be/iqXn6Oiis4Q)
+
+### 데모 실행 방법
+
+`.env_sample` 파일을 복사하여 `.env` 파일을 생성하고, `OPENAI_API_KEY`, `TAVILY_API_KEY` 를 설정합니다.
+
+**OpenAI API 키 발급**
+- [OpenAI API 키 발급방법](https://teddylee777.github.io/openai/openai-api-key/) 글을 참고해 주세요.
+
+**TAVILY API 키 발급 주소**
+- https://app.tavily.com/
+  
+가상환경을 설치합니다.
+
+> poerty
+```shell
+poetry shell
+poetry update
+```
+
+> pip
+```shell
+pip install -r requirements.txt
+```
+
+Streamlit 실행
+
+```shell
+streamlit run main.py
+```
+
+## Swarm (실험적/교육용)
 
 경량의 멀티 에이전트 오케스트레이션을 탐구하는 교육용 프레임워크입니다.
 
