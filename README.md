@@ -4,6 +4,10 @@
 
 [![데모 영상](https://img.youtube.com/vi/iqXn6Oiis4Q/0.jpg)](https://youtu.be/iqXn6Oiis4Q)
 
+## Streamlit 데모(바로실행)
+
+[https://poodle-deep-marmot.ngrok-free.app/](https://poodle-deep-marmot.ngrok-free.app/)
+
 ### 데모 실행 방법
 
 `.env_sample` 파일을 복사하여 `.env` 파일을 생성하고, `OPENAI_API_KEY`, `TAVILY_API_KEY` 를 설정합니다.
