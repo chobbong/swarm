@@ -9,7 +9,7 @@
 `.env_sample` 파일을 복사하여 `.env` 파일을 생성하고, `OPENAI_API_KEY`, `TAVILY_API_KEY` 를 설정합니다.
 
 **OpenAI API 키 발급**
-- [OpenAI API 키 발급방법](https://teddylee777.github.io/openai/openai-api-key/) 글을 참고해 주세요.
+- [OpenAI API 키 발급방법](https://wikidocs.net/233342) 글을 참고해 주세요.
 
 **TAVILY API 키 발급 주소**
 - https://app.tavily.com/
