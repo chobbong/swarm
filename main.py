@@ -2,7 +2,6 @@ import streamlit as st
 from openai import OpenAI
 from swarm import Swarm
 from agents import create_agents
-import os
 
 # 스트림릿 앱 제목 설정
 st.title("[SWARM] Multi-Agent Orchestration")
@@ -28,17 +27,32 @@ with st.sidebar:
     st.markdown("💻 [소스코드](https://github.com/teddylee777/swarm)")
     st.markdown("---")
     st.markdown("🔑 API Key 설정")
-    st.markdown("🔐 [OpenAI API 키 발급방법](https://wikidocs.net/233342)")
-    openai_api_key = st.text_input("🤖 OPENAI API 키(GPT)", type="password")
-    st.markdown("🔎 [TAVILY API 키 발급방법](https://app.tavily.com/)")
-    tavily_api_key = st.text_input("🌐 TAVILY API 키(인터넷 검색)", type="password")
-    apply_btn = st.button("✅ 적용", type="primary")
+
+    if "OPENAI_API_KEY" not in st.session_state:
+        st.markdown("🔐 [OpenAI API 키 발급방법](https://wikidocs.net/233342)")
+        openai_api_key = st.text_input("🤖 OPENAI API 키(GPT)", type="password")
+    else:
+        openai_api_key = None
+
+    if "TAVILY_API_KEY" not in st.session_state:
+        st.markdown("🔎 [TAVILY API 키 발급방법](https://app.tavily.com/)")
+        tavily_api_key = st.text_input("🌐 TAVILY API 키(인터넷 검색)", type="password")
+    else:
+        tavily_api_key = None
+
+    clear_keys_btn = None
+    apply_btn = None
+    if openai_api_key is not None or tavily_api_key is not None:
+        apply_btn = st.button("✅ 적용", type="primary")
+    else:
+        clear_keys_btn = st.button("🗑️ 키 초기화", key="clear_keys_btn")
 
     if apply_btn:
         if openai_api_key:
             st.session_state["OPENAI_API_KEY"] = openai_api_key
         if tavily_api_key:
             st.session_state["TAVILY_API_KEY"] = tavily_api_key
+        st.rerun()
 
     key1 = deidentified_api_key("OPENAI_API_KEY")
     key2 = deidentified_api_key("TAVILY_API_KEY")
@@ -47,6 +61,16 @@ with st.sidebar:
     if key2:
         st.markdown(f"🔑 **TAVILY API 키**\n\n`{key2}`")
 
+    if clear_keys_btn:
+        st.session_state.pop("OPENAI_API_KEY")
+        st.session_state.pop("TAVILY_API_KEY")
+        st.rerun()
+
+    # 대화 내용 초기화 버튼 추가
+    clear_btn = st.button("🗑️ 대화 내용 초기화(처음부터 시작)")
+
+if clear_btn:
+    st.session_state["messages"] = []
 
 if not check_api_key("OPENAI_API_KEY"):
     st.warning("OPENAI API 키가 설정되지 않았습니다.")
