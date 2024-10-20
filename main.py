@@ -1,17 +1,56 @@
 import streamlit as st
-from dotenv import load_dotenv
 from openai import OpenAI
 from swarm import Swarm
-from agents import supervisor
-
-load_dotenv()
+from agents import create_agents
+import os
 
 # 스트림릿 앱 제목 설정
-st.title("보고서 작성 Agent w/ SWARM")
+st.title("[SWARM] Multi-Agent Orchestration")
+
+
+def deidentified_api_key(key_name: str) -> str:
+    api_key = os.environ.get(key_name)
+    if api_key:
+        return f"{api_key[:6]}...{api_key[-6:]}"
+    return None
+
+
+def check_api_key(key_name: str) -> bool:
+    return os.environ.get(key_name) is not None
+
+
+with st.sidebar:
+    st.markdown("API Key 설정")
+    st.markdown("[OpenAI API 키 발급방법](https://wikidocs.net/233342)")
+    openai_api_key = st.text_input("OPENAI API 키(GPT)", type="password")
+    st.markdown("[TAVILY API 키 발급방법](https://app.tavily.com/)")
+    tavily_api_key = st.text_input("TAVILY API 키(인터넷 검색)", type="password")
+    apply_btn = st.button("적용", type="primary")
+
+    if apply_btn:
+        if openai_api_key:
+            os.environ["OPENAI_API_KEY"] = openai_api_key
+        if tavily_api_key:
+            os.environ["TAVILY_API_KEY"] = tavily_api_key
+
+    key1 = deidentified_api_key("OPENAI_API_KEY")
+    key2 = deidentified_api_key("TAVILY_API_KEY")
+    if key1:
+        st.markdown(f"**OPENAI API 키**\n\n`{key1}`")
+    if key2:
+        st.markdown(f"**TAVILY API 키**\n\n`{key2}`")
+
+
+if not check_api_key("OPENAI_API_KEY"):
+    st.warning("OPENAI API 키가 설정되지 않았습니다.")
+    st.stop()
+
+if not check_api_key("TAVILY_API_KEY"):
+    st.warning("TAVILY API 키가 설정되지 않았습니다.")
 
 # 세션 상태 초기화
-if "supervisor" not in st.session_state:
-    st.session_state["supervisor"] = supervisor
+if "agents" not in st.session_state:
+    st.session_state["agents"] = create_agents()
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
@@ -28,16 +67,12 @@ def print_messages():
             st.markdown(message["content"])
 
 
-# 저장된 메시지 출력
-print_messages()
-
-
 # 스트리밍 응답 처리 및 출력 함수
-def process_and_print_streaming_response(response, ai_container):
+def process_and_print_streaming_response(response):
     content = ""
     last_sender = ""
 
-    with ai_container:
+    with st.chat_message("assistant"):
         tool_container = st.empty()
         chat_container = st.empty()
         tool_call_str = ""
@@ -77,6 +112,9 @@ def process_and_print_streaming_response(response, ai_container):
                 return chunk["response"]
 
 
+# 저장된 메시지 출력
+print_messages()
+
 # 사용자 입력 처리
 user_input = st.chat_input("Enter your message")
 
@@ -89,15 +127,13 @@ if user_input:
         swarm = st.session_state["swarm"]
         # Swarm을 사용하여 응답 생성
         response = swarm.run(
-            agent=st.session_state["supervisor"],
+            agent=st.session_state["agents"]["supervisor"],
             messages=st.session_state["messages"],
             stream=True,
         )
 
         # 응답 처리 및 출력
-        ai_answer = process_and_print_streaming_response(
-            response, st.chat_message("assistant")
-        )
+        ai_answer = process_and_print_streaming_response(response)
 
         # 응답을 메시지 히스토리에 추가
         st.session_state["messages"].append(

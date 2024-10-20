@@ -64,30 +64,53 @@ def transfer_to_supervisor():
     return supervisor
 
 
-# Supervisor Agent 정의
-supervisor = Agent(
-    name="Supervisor",
-    instructions=read_instruction("prompts/supervisor"),
-    functions=[transfer_to_researcher, transfer_to_writer, transfer_to_critic],
-)
+def create_agent(name, instruction_file, functions):
+    """에이전트를 생성하는 함수"""
+    return Agent(
+        name=name, instructions=read_instruction(instruction_file), functions=functions
+    )
 
-# Research Agent 정의
-researcher = Agent(
-    name="Research Agent",
-    instructions=read_instruction("prompts/research"),
-    functions=[search_on_web, transfer_to_supervisor],
-)
 
-# Writing Agent 정의
-writer = Agent(
-    name="Research Agent",
-    instructions=read_instruction("prompts/writer"),
-    functions=[transfer_to_supervisor],
-)
+# 에이전트 생성 함수
+def create_agents():
+    global supervisor, researcher, writer, critic
+    print("create_agents")
 
-# Critic Agent 정의
-critic = Agent(
-    name="Critic Agent",
-    instructions=read_instruction("prompts/critic"),
-    functions=[transfer_to_supervisor],
-)
+    supervisor = create_agent(
+        "Supervisor",
+        "prompts/supervisor",
+        [transfer_to_researcher, transfer_to_writer, transfer_to_critic],
+    )
+
+    researcher = create_agent(
+        "Research Agent", "prompts/research", [search_on_web, transfer_to_supervisor]
+    )
+
+    writer = create_agent("Writing Agent", "prompts/writer", [transfer_to_supervisor])
+
+    critic = create_agent("Critic Agent", "prompts/critic", [transfer_to_supervisor])
+
+    return {
+        "supervisor": supervisor,
+        "researcher": researcher,
+        "writer": writer,
+        "critic": critic,
+    }
+
+
+# 에이전트 instruction 업데이트 함수
+def update_agent_instruction(agent_name, new_instruction):
+    global supervisor, researcher, writer, critic
+
+    agents = {
+        "supervisor": supervisor,
+        "researcher": researcher,
+        "writer": writer,
+        "critic": critic,
+    }
+
+    if agent_name in agents:
+        agents[agent_name].instructions = new_instruction
+        print(f"{agent_name} 에이전트의 instruction이 업데이트되었습니다.")
+    else:
+        print(f"에러: {agent_name} 에이전트를 찾을 수 없습니다.")
